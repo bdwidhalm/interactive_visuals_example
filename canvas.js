@@ -50,6 +50,21 @@ class Line {
     c.strokeStyle = 'rgba(255, 255, 255, 0.5)';
     c.fillStyle = 'rgba(255, 255, 255, 0.3)';
 
+    const drawLinePath = (width = 0, color) => {
+      c.beginPath();
+      c.moveTo(this.x - (width / 2), this.y + (width / 2));
+      c.lineTo(this.x - (width / 2) + 300, this.y - (width / 2) - 1000);
+      c.lineTo(this.x + (width / 2) + 300, this.y - (width / 2) - 1000);
+      c.lineTo(this.x + (width / 2), this.y - (width / 2));
+      c.closePath();
+      if (c.isPointInPath(mouse.x, mouse.y) && color) {
+        c.strokeStyle = color;
+      };
+    };
+
+    drawLinePath(150, '#baf2ef');
+    drawLinePath(50, 'dcf3ff');
+
     c.beginPath();
     c.arc(this.x, this.y, 1, 0, Math.PI * 2, false);
     c.fill();
@@ -63,6 +78,8 @@ class Line {
 
   update = () => {
     // this is where we control movement and interactivity
+    this.radians += this.velocity;
+    this.y = this.y + Math.cos(this.radians + this.offset);
   }
 }
 
